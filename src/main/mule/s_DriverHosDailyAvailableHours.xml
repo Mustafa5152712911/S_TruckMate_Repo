@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<sub-flow name="Create_HosDailyAvailableHours" doc:id="0f6ab8aa-6f0b-4f2d-a532-a552fe76dd5f" >
+		<set-variable value="#[attributes.headers.'Password']" doc:name="Password" doc:id="a709f386-84df-44c1-8dbe-2d02aabdcada" variableName="Password"/>
+		<ee:transform doc:name="Headers" doc:id="4b0bc977-6314-4a2f-9b8f-6c8142b1a610" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="UserName" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Username']]></ee:set-variable>
+				<ee:set-variable variableName="DSN" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'DSN']]></ee:set-variable>
+				<ee:set-variable variableName="NetworkID" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'NetworkID']]></ee:set-variable>
+				<ee:set-variable variableName="Schema" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Schema']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="BODY" doc:id="73350219-f577-4965-b937-c7249310a385" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns urn urn:MobileCommImpl
+ns urn1 urn:TruckMateTypes
+ns urn2 urn:MobileCommIntf-IMobileComm
+---
+soapenv#Envelope:{
+soapenv#Header:{
+urn#TMobileCommHeader:{
+NetworkID: vars.NetworkID
+},
+urn1#TTMHeader:{
+DSN: vars.DSN,//p('secure::truckmate.dsn'),
+Password:  vars.Password,//p('secure::truckmate.password'),
+Schema:  vars.Schema,//p('secure::truckmate.schema'),
+Username:  vars.UserName//p('secure::truckmate.username')
+}
+},
+soapenv#Body: {
+urn2#SendDriverHOSAvailableHours:{
+	DriverId:payload.Envelope.Body.SendDriverHOSAvailableHours.DriverId,
+	OnDutyHoursAvailToday:payload.Envelope.Body.SendDriverHOSAvailableHours.OnDutyHoursAvailToday,
+	DrivingHoursAvailToday:payload.Envelope.Body.SendDriverHOSAvailableHours.DrivingHoursAvailToday,
+	Hour24ResetDate:payload.Envelope.Body.SendDriverHOSAvailableHours.Hour24ResetDate,
+	Hour34ResetDate:"",
+	Hour72ResetDate:""
+	}
+}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Create_HosDailyAvailableHours" doc:id="0351853a-2ae3-4bac-a3a4-40c7676f2028" config-ref="HTTP_Request_configuration" path="/TruckMateWS-KeepTrucking/soap/IMobileComm">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"SOAPAction" : "urn:MobileCommIntf-IMobileComm#SendDriverHOSAvailableHours",
+	"Content-Type" : "text/xml"
+}]]]></http:headers>
+		</http:request>
+		<validation:is-true doc:name="CheckNullRecords..." doc:id="2e49ed86-b882-402a-bb45-0c53a46607d6" expression="#[sizeOf(payload)&gt;0]" message="Cannot Proceeded with the Null Records...."/>
+		<ee:transform doc:name="Response" doc:id="c6dcf4d1-6494-4146-810f-3920fdf87378" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

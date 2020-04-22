@@ -1,0 +1,44 @@
+#%RAML 1.0 Library
+types:
+  Driver:
+    type: object
+    properties:
+      Envelope: 
+        type: object
+        properties:
+          Body:
+            type: object
+            properties:
+              GetDriverResponse:
+                type: object
+                properties:
+                  return:
+                    type: object
+                    properties:
+                      DriverId?: string
+                      CurrentZone?: string
+                      DriverName: string
+                      DriverShift: string
+                      DriverType: string
+                      HomeZone: string
+                      StartDate: datetime
+                      StartTime: string
+                      TerminalZone: string
+                      ActiveInDisp: string
+                      OtherPayCategory: string
+                      DutyCycle: string
+                      HoursLastUpdated: datetime
+                      CurrentTrip: string
+                      NextTrip: string
+                      DLState: string
+                      LicenseNumber: string
+                      User1: string
+                  _xmlns:NS1: string
+                  __prefix: string    
+              _SOAP-ENV:encodingStyle: string
+              __prefix: string
+          _xmlns:SOAP-ENV: string
+          _xmlns:xsd: string
+          _xmlns:xsi: string
+          _xmlns:SOAP-ENC: string
+          __prefix: string    

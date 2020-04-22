@@ -1,0 +1,224 @@
+#%RAML 1.0
+version: v1
+title: TruckMate_APIs
+description: This provides an API's of TruckMate
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/ce77e8f0-c565-4078-95a6-4af9f3cd2e76/ # baseUri:
+uses:
+  GetDriver: DataTypes/GetDriverResponse.raml
+  GetPunit:  DataTypes/GetPUnitResponse.raml
+  GetLoadOffers: DataTypes/GetLoadOffersResponse.raml
+  SendMessageBody: DataTypes/SendMessageBody.raml
+  SendMessageResponse: DataTypes/SendMessageResponse.raml
+  SendMessageStatusBody: DataTypes/SendMessageStatusBody.raml
+  SendPositions: DataTypes/SendPositionsBody.raml
+  hosdailyHours: DataTypes/hosDailyHoursBody.raml
+  hosavailablehours: DataTypes/HosAvailableHours.raml
+  resources: DataTypes/ResourcesResponse.raml
+
+protocols: [HTTP,HTTPS]
+mediaType: 
+  - application/json
+traits:
+  CommonHeadersIresManagement: !include Traits/CommonHeaders.raml
+  CommonHeadersIMobile: !include Traits/CommonHeaders1.raml
+
+/resources:
+  get:
+    is:
+      - CommonHeadersIresManagement:
+    queryParameters:
+      ResType:
+        required: true
+        type: string
+        description: ResType is a Resource id to get the details of the TruckMate Resources.
+    responses:
+      200:
+        body:
+          application/json:
+            type: resources.Resources
+            example: !include Examples/ResourcesResponse.json
+
+
+/driver:
+  get:
+    is:
+      - CommonHeadersIresManagement:
+    queryParameters:
+      DriverId:
+        required: true
+        type: string
+        description: DriverId is a tdriver to get the details of the Driver.
+    responses:
+      200:
+        body:
+          application/json:
+            type: GetDriver.Driver
+            example: !include Examples/GetDriverResponse.json
+                      
+  post:
+    is:
+      - CommonHeadersIresManagement:
+    body:
+      application/json:
+        type: GetDriver.Driver
+        example: !include Examples/GetDriverResponse.json
+    responses:
+      201:
+        body:
+          application/json:
+            type: GetDriver.Driver
+            example: !include Examples/GetDriverResponse.json
+
+
+/power_unit:
+  get:
+    is:
+      - CommonHeadersIresManagement:
+    queryParameters:
+      UnitId:
+        required: true
+        type: string
+        description: UnitId is a TDriver Id to get the details of the Power Unit.
+    responses:
+      200:
+        body:
+          application/json:
+            type: GetPunit.PowerUnit
+            example: !include Examples/GetPUnitResponse.json
+                      
+  post:
+    is:
+      - CommonHeadersIresManagement:
+    body:
+      application/json:
+        type: GetPunit.PowerUnit
+        example: !include Examples/GetPUnitResponse.json
+    responses:
+      201:
+        body:
+          application/json:
+            type: GetPunit.PowerUnit
+            example: !include Examples/GetPUnitResponse.json   
+
+
+/load_offers:
+  get:
+    is:
+      - CommonHeadersIMobile:
+    queryParameters:
+      TripLimit:
+        required: true
+        type: string
+        description: TripLimit is a Limit in Integer to get the details of the LoadOffers.
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Examples/GetLoadOffersResponse.json 
+
+
+
+/messages:
+  get:
+    is:
+      - CommonHeadersIMobile:
+    queryParameters:
+      MsgLimit:
+        required: true
+        type: string
+        description: MsgLimit is a Limit in Integer to get the details of the Messages.
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Examples/GetMessages.json            
+
+  post:
+    is:
+      - CommonHeadersIMobile:
+    body:
+      application/json:
+        type: SendMessageBody.SendMessage 
+        example: !include Examples/SendMessageBody.json
+          
+    responses:
+      201:
+        body:
+          application/json:
+            type: SendMessageResponse.SendMessage
+            example: !include Examples/SendMessageResponse.json
+
+/send_message_status:
+  post:
+    is:
+      - CommonHeadersIMobile:
+    body:
+      application/json:
+        type:  SendMessageStatusBody.SendMessageStatuss
+        example: !include Examples/SendMessageStatusBody.json
+          
+    responses:
+      201:
+        body:
+          application/json:
+            type: SendMessageResponse.SendMessage
+            example: !include Examples/SendMessageResponse.json
+
+
+/position:
+  put:
+    is:
+      - CommonHeadersIMobile:
+    body:
+      application/json:
+        type:  SendPositions.SendPositions
+        example: !include Examples/SendPositionsBody.json
+          
+    responses:
+      201:
+        body:
+          application/json:
+            type: SendMessageResponse.SendMessage
+            example: !include Examples/SendMessageResponse.json
+     
+            
+
+
+/hos_dailyhours:
+  post:
+    is:
+      - CommonHeadersIMobile:
+    body:
+      application/json:
+        type:  hosdailyHours.hosdailyhours
+        example: !include Examples/hosdailyhoursBody.json
+          
+    responses:
+      201:
+        body:
+          application/json:
+            type: SendMessageResponse.SendMessage
+            example:  !include Examples/SendMessageResponse.json
+
+/hos_availablehours:
+  post:
+    is:
+      - CommonHeadersIMobile:
+    body:
+      application/json:
+        type:  hosavailablehours.hosAvailableHours
+        example: !include Examples/HosAvailableHoursBody.json
+          
+    responses:
+      201:
+        body:
+          application/json:
+            type: SendMessageResponse.SendMessage
+            example:  !include Examples/SendMessageResponse.json                      
+
+
+
+  
+
+
+  

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<sub-flow name="GetMessages" doc:id="a8a73636-cc75-4857-8c4e-7e8aab8c61b2" >
+		<set-variable value="#[attributes.queryParams.'MsgLimit']" doc:name="Set Variable" doc:id="74472b13-c737-40a3-a42d-fa1d44d8cded" variableName="MessageLimit"/>
+		<set-variable value="#[attributes.headers.'Password']" doc:name="Set Variable" doc:id="313531d5-b163-44e3-bb61-fab38f4184af" variableName="Password"/>
+		<ee:transform doc:name="Transform Message" doc:id="492a07d3-46e9-435a-ba39-675e8d9963d8" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="DSN" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'DSN']]></ee:set-variable>
+				<ee:set-variable variableName="UserName" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Username']]></ee:set-variable>
+				<ee:set-variable variableName="Schema" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Schema']]></ee:set-variable>
+				<ee:set-variable variableName="NetworkID" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'NetworkID']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="62ca46ce-e10b-4592-91c9-dbd26490b075" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns urn urn:MobileCommImpl
+ns urn1 urn:TruckMateTypes
+ns urn2 urn:MobileCommIntf-IMobileComm
+---
+soapenv#Envelope:{
+soapenv#Header:{
+urn#TMobileCommHeader:{
+NetworkID:  vars.NetworkID
+},
+urn1#TTMHeader:{
+DSN: vars.DSN,//p('secure::truckmate.dsn'),
+Password: vars.Password,//p('secure::truckmate.password'),
+Schema: vars.Schema,//p('secure::truckmate.schema'),
+Username: vars.UserName//p('secure::truckmate.username')
+}
+},
+soapenv#Body: {
+urn2#GetMessages:{
+	MsgLimit: vars.MessageLimit
+	}
+}
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+			</ee:variables>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request" doc:id="8ca0b806-7561-4fc7-966f-9e6aea45a40a" config-ref="HTTP_Request_configuration" path="/TruckMateWS-KeepTrucking/soap/IMobileComm">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"SOAPAction" : "urn:MobileCommIntf-IMobileComm#GetMessages",
+	"Content-Type" : "text/xml"
+}]]]></http:headers>
+		</http:request>
+		<validation:is-true doc:name="Is true" doc:id="ca7536ac-88bf-4d60-af3b-1cd9d4e6e8d0" expression="#[sizeOf(payload)&gt;0]" message="Getting Null Records From the Service...."/>
+		<ee:transform doc:name="Transform Message" doc:id="8dbdba18-59b7-4e0b-80af-664583f5fc2c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="CreateMessages" doc:id="a0b7c1c4-4095-4366-a7d8-8514d96b42f5" >
+		<set-variable value="#[attributes.headers.'Password']" doc:name="Password" doc:id="81de51b0-998f-4b86-937f-17b84da4810d" variableName="Password"/>
+		<ee:transform doc:name="Headers" doc:id="c43d64e2-9ebf-4d2d-a6de-6ace4a3fb4da" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="DSN" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'DSN']]></ee:set-variable>
+				<ee:set-variable variableName="UserName" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Username']]></ee:set-variable>
+				<ee:set-variable variableName="Schema" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Schema']]></ee:set-variable>
+				<ee:set-variable variableName="NetworkID" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'NetworkID']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="BODY" doc:id="3139023d-ce12-421d-b230-39b0d0aa1d47" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns urn urn:MobileCommImpl
+ns urn1 urn:TruckMateTypes
+ns urn2 urn:MobileCommIntf-IMobileComm
+---
+soapenv#Envelope:{
+soapenv#Header:{
+urn#TMobileCommHeader:{
+NetworkID: vars.NetworkID
+},
+urn1#TTMHeader:{
+DSN: vars.DSN,//p('secure::truckmate.dsn'),
+Password: vars.Password,//p('secure::truckmate.password'),
+Schema: vars.Schema,//p('secure::truckmate.schema'),
+Username: vars.UserName//p('secure::truckmate.username')
+}
+},
+soapenv#Body: {
+urn2#SendMessages:{
+Messages:{
+	item:{
+		Body:payload.Envelope.Body.SendMessages.Messages.item.Body,
+		Created:payload.Envelope.Body.SendMessages.Messages.item.Created,
+		DeviceID:payload.Envelope.Body.SendMessages.Messages.item.DeviceID ,
+		Format:payload.Envelope.Body.SendMessages.Messages.item.Format,
+		GPS:{
+			Description:{},
+			IsValid:payload.Envelope.Body.SendMessages.Messages.item.GPS.IsValid as Boolean,
+			Lat:payload.Envelope.Body.SendMessages.Messages.item.GPS.Lat as Number ,
+			Long:payload.Envelope.Body.SendMessages.Messages.item.GPS.Long as Number 
+			
+		},
+		ID:payload.Envelope.Body.SendMessages.Messages.item.ID as Number,
+		ReceivedByNetwork:payload.Envelope.Body.SendMessages.Messages.item.ReceivedByNetwork,
+		Recipient:{
+			ID:payload.Envelope.Body.SendMessages.Messages.item.Recipient.ID,
+			Kind:payload.Envelope.Body.SendMessages.Messages.item.Recipient.Kind
+			
+		},
+		ReplyTo:payload.Envelope.Body.SendMessages.Messages.item.ReplyTo as Number
+		
+	}
+}
+
+}
+}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="CreateMessages" doc:id="c61ef89c-b07f-43f7-a913-c8a96e8b8e6e" config-ref="HTTP_Request_configuration" path="/TruckMateWS-KeepTrucking/soap/IMobileComm">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"SOAPAction" : "urn:MobileCommIntf-IMobileComm#SendMessages",
+	"Content-Type" : "text/xml"
+}]]]></http:headers>
+		</http:request>
+		<validation:is-true doc:name="CheckNullRecords..." doc:id="af595f87-4306-4753-ad3c-b5914b4474c0" expression="#[sizeOf(payload)&gt;0]" message="Cannot Procedd with Null Records...."/>
+		<ee:transform doc:name="Response" doc:id="c17e9151-b1be-4ddc-8812-2da5621e9092" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="SendMessagesNotifications" doc:id="8ae01623-757e-4b36-a4cd-456b46eddcbb" >
+		<set-variable value="#[attributes.headers.'Password']" doc:name="Password" doc:id="2f6e399a-3a5a-42b9-a6d4-8c8594c3dd9e" variableName="Password"/>
+		<ee:transform doc:name="Headers" doc:id="2c1f40fb-28fb-4e39-8c11-ec3e6316e466">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="DSN"><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'DSN']]></ee:set-variable>
+				<ee:set-variable variableName="UserName"><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Username']]></ee:set-variable>
+				<ee:set-variable variableName="Schema"><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Schema']]></ee:set-variable>
+				<ee:set-variable variableName="NetworkID"><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'NetworkID']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="BODY" doc:id="55abd13a-0f40-4343-b4f8-3a675f343033" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns urn urn:MobileCommImpl
+ns urn1 urn:TruckMateTypes
+ns urn2 urn:MobileCommIntf-IMobileComm
+---
+soapenv#Envelope:{
+soapenv#Header:{
+urn#TMobileCommHeader:{
+NetworkID: vars.NetworkID
+},
+urn1#TTMHeader:{
+DSN: vars.DSN,//p('secure::truckmate.dsn'),
+Password: vars.Password,//p('secure::truckmate.password'),
+Schema: vars.Schema,//p('secure::truckmate.schema'),
+Username: vars.UserName//p('secure::truckmate.username')
+}
+},
+soapenv#Body: {
+urn2#SendNotificationStatus:{
+StatusPairs:{
+item:{
+	ID:payload.Envelope.Body.SendNotificationStatus.StatusPairs.item.ID,
+	Status:payload.Envelope.Body.SendNotificationStatus.StatusPairs.item.Status
+}
+}
+}
+}
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="SendMessagesNotifications" doc:id="55ad8550-864e-4c1d-b1da-f7f8a2e26b22" config-ref="HTTP_Request_configuration" path="/TruckMateWS-KeepTrucking/soap/IMobileComm">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"SOAPAction" : "urn:MobileCommIntf-IMobileComm#SendNotificationStatus",
+	"Content-Type" : "text/xml"
+}]]]></http:headers>
+		</http:request>
+		<validation:is-true doc:name="CheckNullRecords..." doc:id="54452e21-7b0e-4eb1-acd8-81e7e5f0c24b" expression="#[sizeOf(payload)&gt;0]" message="Cannot Procedd with Null Records...."/>
+		<ee:transform doc:name="Response" doc:id="8077e4e2-7488-423b-b2cd-99f77e92f426" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

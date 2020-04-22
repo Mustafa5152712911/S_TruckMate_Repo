@@ -1,0 +1,43 @@
+{
+	"Envelope": {
+		"Header": {
+			"TMobileCommHeader": {
+				"NetworkID": "K",
+				"__prefix": "urn"
+			},
+			"TTMHeader": {
+				"DSN": "KPTRKING",
+				"Password": "K8wi$R49i",
+				"Schema": "TMWIN",
+				"Username": "KPTRUCKING",
+				"__prefix": "urn1"
+			},
+			"__prefix": "soapenv"
+		},
+		"Body": {
+			"SendPositions": {
+				"Positions": {
+					"item": {
+						"Created": "2017-05-10T21:02:31Z",
+						"DeviceID": "123456",
+						"GPS": {
+							"Description": "",
+							"IsValid": "true",
+							"Lat": "10.0",
+							"Long": "9.0"
+						},
+						"ReceivedByNetwork": "2017-05-10T21:02:31Z",
+						"NetworkLocation": ""
+					}
+				},
+				"__prefix": "urn2"
+			},
+			"__prefix": "soapenv"
+		},
+		"_xmlns:soapenv": "http://schemas.xmlsoap.org/soap/envelope/",
+		"_xmlns:urn": "urn:MobileCommImpl",
+		"_xmlns:urn1": "urn:TruckMateTypes",
+		"_xmlns:urn2": "urn:MobileCommIntf-IMobileComm",
+		"__prefix": "soapenv"
+	}
+}

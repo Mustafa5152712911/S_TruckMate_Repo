@@ -1,0 +1,274 @@
+#%RAML 1.0 Library
+types:
+  LoadOffers:
+    type: object
+    properties:
+      Envelope:
+        type: object
+        properties:
+          Body:
+            type: object
+            properties:
+              GetLoadOffersResponse:
+                type: object
+                properties:
+                  return:
+                    type: object
+                    properties:
+                      item:
+                        type: array
+                        
+                      items:
+                        type: object
+                        properties:
+                          Caller:
+                            type: object
+                            properties:
+                              Address: string
+                              Address2: string
+                              Cell: string
+                              City: string
+                              CloseTime: time-only
+                              Contact: string
+                              Email: string
+                              Extension: string
+                              Fax: string
+                              GPS:
+                                type: object
+                                properties:
+                                  Description: string
+                                  IsValid: boolean
+                                  Lat: string
+                                  Long: string
+                              ID: string
+                              Name: string
+                              OpenTime: time-only
+                              Phone: string
+                              PostalCode: string
+                              Prov: string
+                              UnitNo: string
+                              Dock: string
+                              DockNum: string
+                              ZoneID: string
+                              AppointmentRequired: string
+                              AppointmentMade: string
+                              AppointmentSpot: string
+                              Country: string
+                          CareOf:
+                            type: object
+                            properties:
+                              Address: string
+                              Address2: string
+                              Cell: string
+                              City: string
+                              CloseTime: string
+                              Contact: string
+                              Email: string
+                              Extension: string
+                              Fax: string
+                              GPS:
+                                type: object
+                              Commodity: string
+                              Consignee:
+                                type: object
+                                properties:
+                                  GPS:
+                                    type: object
+                                  ID: string
+                                  Name: string
+                                  OpenTime: string
+                                  Phone: string
+                                  PostalCode: string
+                                  Prov: string
+                                  UnitNo: string
+                                  Dock: string
+                                  DockNum: string
+                                  ZoneID: string
+                                  AppointmentRequired: string
+                                  AppointmentMade: string
+                                  AppointmentSpot: string
+                                  Country: string
+
+                              ContainerID: string
+                              Created: datetime-only
+                              CustomsSelfAssesment: string
+                              DangerousGoods: string
+                              DeliverBy: datetime-only
+                              DeliverByEnd: datetime-only
+                              Destination: 
+                                type: object
+                                properties:
+                                  GPS: 
+                                    type: object
+                              DeviceID: string
+                              DriverID: string
+                              DriverNotes: string
+                              EmptyDistance:
+                                type: object
+                                properties:
+                                  Units: string
+                                  Value: string
+                              EquipmentID: string
+                              ETA: datetime-only
+                              FreightBill: string
+                              Length:
+                                type: object
+                                properties:
+                                  Units: string
+                                  Value: string
+                              LoadedDistance: 
+                                type: object
+                                properties:
+                                  Units: string
+                                  Value: string
+                              MessageID: string
+                              Origin:
+                                type: object
+                                properties:
+                                  Address: string
+                                  Address2: string
+                                  Cell: string
+                                  City: string
+                                  CloseTime: string
+                                  Contact: string
+                                  Email: string
+                                  Extension: string
+                                  Fax: string
+                                  GPS:
+                                    type: object
+                                    properties:
+
+                              OSDNotes: string
+                              PalletInventory: string
+                              PickupAt: 
+                                type: object
+                                properties:
+                                  Address: string
+                                  Address2: string
+                                  Cell: string
+                                  City: string
+                                  CloseTime: string
+                                  Contact: string
+                                  Email: string
+                                  Extension: string
+                                  Fax: string
+                                  GPS:
+                                    type: object
+
+                              PickupBy: datetime-only
+                              PickupByEnd: datetime-only
+                              Pieces:
+                                type: object
+                                properties:
+                                  Units: string
+                                  Value: string
+                              PUnitID: string
+                              Shipper:
+                                type: object
+                                properties:
+                                  Address: string
+                                  Address2: string
+                                  Cell: string
+                                  City: string
+                                  CloseTime: string
+                                  Contact: string
+                                  Email: string
+                                  Extension: string
+                                  Fax: string
+                                  GPS:
+                                    type: object
+
+                              Temperature:
+                                type: object
+                                properties:
+                                  Units: string
+                                  Value: string
+                              TemperatureControlled: string
+                              Third: 
+                                type: object
+                                properties:
+                                  Address: string
+                                  Address2: string
+                                  Cell: string
+                                  City: string
+                                  CloseTime: string
+                                  Contact: string
+                                  Email: string
+                                  Extension: string
+                                  Fax: string
+                                  GPS:
+                                    type: object
+                                    properties:
+                                      Description: string
+                                      IsValid: string
+                                      Lat: string
+                                      Long: string
+
+                              TotalDistance:
+                                type: object
+                                properties:
+                                  Units: string
+                                  Value: string
+                              TraceNumbers: string
+                              TrailerID: string
+                              Trip: string
+                              UserFields: 
+                                type: object
+                                properties:
+                                  User01: string
+                              Weight: 
+                                type: object
+                                properties:
+                                  Units: string
+                                  Value: string
+                              IMLoadedDLD: string
+                              DLD: string
+                              StartZone: string
+                              EndZone: string
+                              IsLTL: string
+                              Trailer2ID: string
+                  _xmlns:NS1: string
+                  __prefix: string
+              _SOAP-ENV:encodingStyle: string
+              __prefix: string
+          _xmlns:SOAP-ENV: string
+          _xmlns:xsd: string
+          _xmlns:xsi: string
+          _xmlns:SOAP-ENC: string
+          __prefix: string
+
+            
+            
+         
+
+
+                                  
+
+                                          
+                                      
+                                        
+                                  
+
+
+                                  
+
+
+
+
+
+                                  
+
+
+
+
+
+
+ 
+
+
+
+                                
+                          
+
+                         
+                          

@@ -1,0 +1,197 @@
+{
+	"Envelope": {
+		"Body": {
+			"GetLoadOffersResponse": {
+				"return": {
+					"item": [{
+						"Caller": {
+							"Address": "19855-92A Avenue",
+							"Address2": "",
+							"Cell": "",
+							"City": "Langley",
+							"CloseTime": "23:00",
+							"Contact": "",
+							"Email": "",
+							"Extension": "",
+							"Fax": "",
+							"GPS": {
+								"Description": "",
+								"IsValid": "false",
+								"Lat": "0",
+								"Long": "0"
+							},
+							"ID": "SAVEON",
+							"Name": "Save On Foods",
+							"OpenTime": "06:00",
+							"Phone": "124-125-4567",
+							"PostalCode": "",
+							"Prov": "BC",
+							"UnitNo": "",
+							"Dock": "",
+							"DockNum": "",
+							"ZoneID": "",
+							"AppointmentRequired": "",
+							"AppointmentMade": "",
+							"AppointmentSpot": "",
+							"Country": "CA"
+						},
+						"CareOf": {
+							"Address": "20486-64TH AVENUE, SUITE 200",
+							"Address2": "",
+							"Cell": "",
+							"City": "LANGLEY",
+							"CloseTime": "",
+							"Contact": "",
+							"Email": "",
+							"Extension": "",
+							"Fax": "216-223-9718",
+							"GPS": {},
+							"Commodity": "",
+							"Consignee": {
+								"GPS": {},
+								"ID": "TMWSUPPORT",
+								"Name": "TMW SYSTEMS INC",
+								"OpenTime": "",
+								"Phone": "800-663-0626",
+								"PostalCode": "V2Y 2V5",
+								"Prov": "BC",
+								"UnitNo": "",
+								"Dock": "",
+								"DockNum": "",
+								"ZoneID": "BCLAN",
+								"AppointmentRequired": "False",
+								"AppointmentMade": "False",
+								"AppointmentSpot": "False",
+								"Country": ""
+							},
+							"ContainerID": "",
+							"Created": "2018-04-10T13:09:38.147-07:00",
+							"CustomsSelfAssesment": "false",
+							"DangerousGoods": "false",
+							"DeliverBy": "2018-04-10T00:00:00.000-07:00",
+							"DeliverByEnd": "2018-04-10T00:00:00.000-07:00",
+							"Destination": {
+								"GPS": {}
+							},
+							"DeviceID": "74",
+							"DriverID": "DR74",
+							"DriverNotes": "",
+							"EmptyDistance": {
+								"Units": "duMiles",
+								"Value": "0"
+							},
+							"EquipmentID": "",
+							"ETA": "1899-12-30T00:00:00.000-07:00",
+							"FreightBill": "T00209",
+							"Length": {
+								"Units": "FT",
+								"Value": "0"
+							},
+							"LoadedDistance": {
+								"Units": "duMiles",
+								"Value": "0"
+							},
+							"MessageID": "34149",
+							"Origin": {
+								"Address": "19855-92A Avenue",
+								"Address2": "",
+								"Cell": "",
+								"City": "Langley",
+								"CloseTime": "23:00",
+								"Contact": "",
+								"Email": "",
+								"Extension": "",
+								"Fax": "",
+								"GPS": {}
+							},
+							"OSDNotes": "",
+							"PalletInventory": "0",
+							"PickupAt": {
+								"Address": "19855-92A Avenue",
+								"Address2": "",
+								"Cell": "",
+								"City": "Langley",
+								"CloseTime": "23:00",
+								"Contact": "",
+								"Email": "",
+								"Extension": "",
+								"Fax": "",
+								"GPS": {}
+							},
+							"PickupBy": "2018-04-10T06:00:00.000-07:00",
+							"PickupByEnd": "2018-04-10T23:00:00.000-07:00",
+							"Pieces": {
+								"Units": "pieces",
+								"Value": "0"
+							},
+							"PUnitID": "PU74",
+							"Shipper": {
+								"Address": "19855-92A Avenue",
+								"Address2": "",
+								"Cell": "",
+								"City": "Langley",
+								"CloseTime": "23:00",
+								"Contact": "",
+								"Email": "",
+								"Extension": "",
+								"Fax": "",
+								"GPS": {}
+							},
+							"Temperature": {
+								"Units": "tuCelcius",
+								"Value": "0"
+							},
+							"TemperatureControlled": "false",
+							"Third": {
+								"Address": "",
+								"Address2": "",
+								"Cell": "",
+								"City": "",
+								"CloseTime": "",
+								"Contact": "",
+								"Email": "",
+								"Extension": "",
+								"Fax": "",
+								"GPS": {
+									"Description": "",
+									"IsValid": "false",
+									"Lat": "0",
+									"Long": "0"
+								}
+							},
+							"TotalDistance": {
+								"Units": "duMiles",
+								"Value": "0"
+							},
+							"TraceNumbers": "",
+							"TrailerID": "",
+							"Trip": "463",
+							"UserFields": {
+								"User01": ""
+							},
+							"Weight": {
+								"Units": "LB",
+								"Value": "0"
+							},
+							"IMLoadedDLD": "0",
+							"DLD": "336",
+							"StartZone": "BCLAN",
+							"EndZone": "BCLAN",
+							"IsLTL": "false",
+							"Trailer2ID": ""
+						}
+					}]
+				},
+				"_xmlns:NS1": "urn:MobileCommIntf-IMobileComm",
+				"__prefix": "NS1"
+			},
+			"_SOAP-ENV:encodingStyle": "http://schemas.xmlsoap.org/soap/encoding/",
+			"__prefix": "SOAP-ENV"
+		},
+		"_xmlns:SOAP-ENV": "http://schemas.xmlsoap.org/soap/envelope/",
+		"_xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+		"_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+		"_xmlns:SOAP-ENC": "http://schemas.xmlsoap.org/soap/encoding/",
+		"__prefix": "SOAP-ENV"
+	}
+}

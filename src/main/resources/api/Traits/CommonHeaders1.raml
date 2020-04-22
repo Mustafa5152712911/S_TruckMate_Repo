@@ -1,0 +1,22 @@
+#%RAML 1.0 Trait
+usage: Apply this trait to a method that requires header for NetworkId,DSN,Schemas, Username,Password
+headers:
+  NetworkID:
+    description: NetworkId of the TruckMate
+    required: true
+    type:  string
+  DSN:
+    description: Deep space Network for the TruckMate
+    required: true
+    type: string
+  Password:
+    description: Accessing the password for the TrcukMate
+    required: true
+    type: string
+  Schema:
+    required:  true
+    type: string
+  Username:
+    description: This username will give the Authentication of the TruckMate
+    required: true
+    type: string

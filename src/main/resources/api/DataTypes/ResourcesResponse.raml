@@ -1,0 +1,32 @@
+#%RAML 1.0 Library
+types:
+  Resources:
+    type: object
+    properties:
+      Envelope:
+        type: object 
+        properties:
+          Body:
+            type: object
+            properties:
+              GetResourcesResponse:
+                type: object
+                properties:
+                  return:
+                    type: object
+                    properties:
+                      item:
+                        type : object
+                        properties:
+                          ID: string
+                          ResType: string
+                  _xmlns:NS1: string
+                  __prefix: string
+              _SOAP-ENV:encodingStyle: string
+              __prefix: string
+          _xmlns:SOAP-ENV: string
+          _xmlns:xsd: string
+          _xmlns:xsi: string
+          _xmlns:SOAP-ENC: string
+          __prefix: string                
+

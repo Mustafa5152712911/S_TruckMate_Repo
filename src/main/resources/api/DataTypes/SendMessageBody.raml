@@ -1,0 +1,66 @@
+#%RAML 1.0 Library
+types:
+  SendMessage:
+    type: object
+    properties:
+      Envelope: 
+        type: object
+        properties:
+          Header:
+            type: object
+            properties:
+              TMobileCommHeader:
+                type: object
+                properties:
+                  NetworkID:
+                    required: true
+                    type: string
+                  __prefix?: string
+              TTMHeader: 
+                type: object
+                properties:
+                  DSN: string
+                  Password: string
+                  Schema: string
+                  Username: string
+                  __prefix: string
+              __prefix: string
+          Body:
+            type: object
+            properties:
+              SendMessages:
+                type: object
+                properties:
+                  Messages:
+                    type: object
+                    properties:
+                      item:
+                        type: object
+                        properties:
+                          Body: string
+                          Created: string
+                          DeviceID: string
+                          Format: string
+                          GPS:
+                            type: object
+                            properties:
+                              Description: string
+                              IsValid: string
+                              Lat: string
+                              Long: string
+                          ID: string
+                          ReceivedByNetwork: string
+                          Recipient:
+                            type: object
+                            properties:
+                              ID: string
+                              Kind: string
+                          ReplyTo: string
+                  __prefix: string
+              __prefix: string
+          _xmlns:soapenv: string
+          _xmlns:urn: string
+          _xmlns:urn1: string
+          _xmlns:urn2: string
+          __prefix: string
+                                                

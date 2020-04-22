@@ -1,0 +1,50 @@
+{
+	"Envelope": {
+		"Header": {
+			"TMobileCommHeader": {
+				"NetworkID": "K",
+				"__prefix": "urn"
+			},
+			"TTMHeader": {
+				"DSN": "KPTRKING",
+				"Password": "K8wi$R49i",
+				"Schema": "TMWIN",
+				"Username": "KPTRUCKING",
+				"__prefix": "urn1"
+			},
+			"__prefix": "soapenv"
+		},
+		"Body": {
+			"SendMessages": {
+				"Messages": {
+					"item": {
+						"Body": "Test message",
+						"Created": "2020-02-19T12:02:37Z",
+						"DeviceID": "123456",
+						"Format": "mfFreeform",
+						"GPS": {
+							"Description": "",
+							"IsValid": "true",
+							"Lat": "10.9",
+							"Long": "9.0"
+						},
+						"ID": "983",
+						"ReceivedByNetwork": "2020-02-19T12:02:37Z",
+						"Recipient": {
+							"ID": "DR73",
+							"Kind": "rkIndividual"
+						},
+						"ReplyTo": "0"
+					}
+				},
+				"__prefix": "urn2"
+			},
+			"__prefix": "soapenv"
+		},
+		"_xmlns:soapenv": "http://schemas.xmlsoap.org/soap/envelope/",
+		"_xmlns:urn": "urn:MobileCommImpl",
+		"_xmlns:urn1": "urn:TruckMateTypes",
+		"_xmlns:urn2": "urn:MobileCommIntf-IMobileComm",
+		"__prefix": "soapenv"
+	}
+}

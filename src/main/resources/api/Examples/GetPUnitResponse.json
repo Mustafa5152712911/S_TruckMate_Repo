@@ -1,0 +1,33 @@
+{
+	"Envelope": {
+		"Body": {
+			"GetPUnitResponse": {
+				"return": {
+					"ActiveInDisp": "false",
+					"Description": "",
+					"EquipClass": "",
+					"Fleet": "",
+					"Ownership": "",
+					"StraightTruck": "false",
+					"UnitId": "",
+					"Current_Trip": "0",
+					"Axles": "0",
+					"LicensePlate": "",
+					"Make": "",
+					"MaxWeight": "0",
+					"MaxWeightUnits": "",
+					"User1": ""
+				},
+				"_xmlns:NS1": "urn:ResManIntf-IResManagement",
+				"__prefix": "NS1"
+			},
+			"_SOAP-ENV:encodingStyle": "http://schemas.xmlsoap.org/soap/encoding/",
+			"__prefix": "SOAP-ENV"
+		},
+		"_xmlns:SOAP-ENV": "http://schemas.xmlsoap.org/soap/envelope/",
+		"_xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+		"_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+		"_xmlns:SOAP-ENC": "http://schemas.xmlsoap.org/soap/encoding/",
+		"__prefix": "SOAP-ENV"
+	}
+}

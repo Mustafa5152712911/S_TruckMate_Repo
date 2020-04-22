@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd ">
+    <apikit:config name="truckmate_apis-config" api="api/truckmate_apis.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <flow name="truckmate_apis-main">
+        <http:listener path="/api/*" config-ref="HTTP_Listener_config">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="truckmate_apis-config" />
+    </flow>
+    <flow name="get:\driver:truckmate_apis-config">
+        <flow-ref doc:name="GetDriver" doc:id="53d6e486-206a-4dd0-9869-1fc8dd4e9da5" name="GetDriver" />
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="e50507c3-04a4-4797-9c23-08f327e17403" />
+    </flow>
+    <flow name="get:\load_offers:truckmate_apis-config">
+        <flow-ref doc:name="GetLoadOffers" doc:id="432f8082-826a-4484-94b4-2ebb7302914e" name="GetLoadOffers" />
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="a8e08b22-f633-4161-9cf2-d1d454390eae" />
+    </flow>
+    <flow name="get:\messages:truckmate_apis-config">
+        <flow-ref doc:name="GetMessages" doc:id="87b5cecc-3517-4f5d-89b4-49cbdbfa5e02" name="GetMessages" />
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="c7e41d7d-57f3-40f2-b937-db4ee5a36984" />
+    </flow>
+    <flow name="get:\power_unit:truckmate_apis-config">
+		<flow-ref doc:name="GetPowerUnit" doc:id="087303bb-fa68-48b0-a478-bfcf944a14a3" name="GetPowerUnit"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="03a5b2d5-a05f-4497-b666-bd3087c28cda" />
+    </flow>
+    <flow name="get:\resources:truckmate_apis-config">
+		<flow-ref doc:name="GetResources" doc:id="edc147cd-2d7b-46dd-bd8a-cea4afb4289b" name="GetResources"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="5241dd04-fd7b-4cef-8a7b-7961e5317ef0" />
+    </flow>
+    <flow name="post:\driver:application\xml:truckmate_apis-config">
+        <flow-ref doc:name="CreateDriver" doc:id="8dba8de2-dce0-4230-9083-913afbba8de5" name="CreateDriver" />
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="c4a5bb11-938d-4028-bc48-aed2089da26a" />
+    </flow>
+    <flow name="post:\power_unit:application\json:truckmate_apis-config">
+        <flow-ref doc:name="CreatePowerUnit" doc:id="de1c8609-627d-4786-868c-067e6182c348" name="CreatePowerUnit"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="b8adf9f9-befc-450b-bdc0-e598d301523c" />
+    </flow>
+    <flow name="put:\position:application\json:truckmate_apis-config">
+		<flow-ref doc:name="SendPositions" doc:id="20c0f053-ef45-44ac-a176-7695d72f9d3b" name="SendPositions"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="48350f6b-7d47-494a-a548-efa51037aa83" />
+    </flow>
+    <flow name="post:\hos_availablehours:application\json:truckmate_apis-config">
+		<flow-ref doc:name="Create_HosDailyAvailableHours" doc:id="ce43435d-8407-4298-a2d5-b61095fb965c" name="Create_HosDailyAvailableHours"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="929cce6e-548a-41f2-a1a7-7cf97316873c" />
+    </flow>
+    <flow name="post:\hos_dailyhours:application\json:truckmate_apis-config">
+        <flow-ref doc:name="Create_DriverHOSDailyHours" doc:id="c2967790-c388-4259-b0c4-6f20d8a4526a" name="Create_DriverHOSDailyHours"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="3f1fcdbf-10e7-49f7-b7fc-21b24220b623" />
+    </flow>
+    <flow name="post:\messages:application\json:truckmate_apis-config">
+        <flow-ref doc:name="CreateMessages" doc:id="24d990fd-da8f-476b-bb1b-e8c67b0d6240" name="CreateMessages"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="fbc2c695-5138-4e30-9b94-abe777b0253d" />
+    </flow>
+    <flow name="post:\send_message_status:application\json:truckmate_apis-config">
+		<flow-ref doc:name="SendMessagesNotifications" doc:id="7230defd-1dc1-44e6-a7a5-e7c469eff005" name="SendMessagesNotifications"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="3c92aabf-bf41-4820-9c6a-a33e60eea6aa" />
+    </flow>
+</mule>

@@ -1,0 +1,50 @@
+{
+	"Envelope": {
+		"Body": {
+			"GetMessagesResponse": {
+				"return": {
+					"item": [{
+							"Body": "",
+							"Created": "2020-03-13T01:56:56.626-07:00",
+							"DeviceID": "100",
+							"Fields": {
+								"item": [{
+										"ID": "1",
+										"ValueBoolean": "false",
+										"ValueDateTime": "1899-12-30T00:00:00.000-07:00",
+										"ValueNumber": "0",
+										"ValueText": "451"
+									},
+									{
+										"ID": "3",
+										"ValueBoolean": "false",
+										"ValueDateTime": "1899-12-30T00:00:00.000-07:00",
+										"ValueNumber": "0",
+										"ValueText": ""
+									}
+								]
+							},
+							"Format": "mfMacro",
+							"GPS": {
+								"Description": "",
+								"IsValid": "false",
+								"Lat": "0",
+								"Long": "0"
+							},
+							"ID": "34097",
+							"MacroNumber": "1",
+							"MacroRevision": "0",
+							"ReceivedByNetwork": "1899-12-30T00:00:00.000-07:00",
+							"Recipient": {
+								"ID": "DR75",
+								"Kind": "rkIndividual"
+							},
+							"ReplyTo": "0"
+						}
+
+					]
+				}
+			}
+		}
+	}
+}

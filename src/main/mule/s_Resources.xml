@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:validation="http://www.mulesoft.org/schema/mule/validation"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<sub-flow name="GetResources" doc:id="ca621bc0-8a9f-4eba-aca0-36d0e07cccd6" >
+		<set-variable value="#[attributes.queryParams.'ResType']" doc:name="rType" doc:id="1d6aac64-f087-406d-bf8d-2e3cd85381c8" variableName="rType"/>
+		<ee:transform doc:name="Headers" doc:id="b48cad68-731c-4ecd-ac44-cdca8e42decc" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="DSN" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'DSN']]></ee:set-variable>
+				<ee:set-variable variableName="Password" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Password']]></ee:set-variable>
+				<ee:set-variable variableName="Schema" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Schema']]></ee:set-variable>
+				<ee:set-variable variableName="Username" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Username']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="BODY" doc:id="33d588e5-856a-4799-bbf0-7fdebd8c856c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns urn urn:TruckMateTypes
+ns urn1 urn:ResManIntf-IResManagement
+---
+soapenv#Envelope:{
+soapenv#Header:{
+urn#TTMHeader:{
+DSN: vars.DSN,
+Password: vars.Password,
+Schema:vars.Schema,
+Username:vars.Username
+}
+},
+soapenv#Body:{
+urn1#GetResources:{
+ResType:vars.rType
+}
+},
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="GetResources" doc:id="17660200-22aa-47be-9761-0b6603aab88e" config-ref="HTTP_Request_configuration" path="/TruckMateWS-KeepTrucking/soap/IResManagement">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"SOAPAction" : "urn:ResManIntf-IResManagement#GetResources",
+	"Content-Type" : "text/xml"
+}]]]></http:headers>
+		</http:request>
+		<validation:is-true doc:name="CheckNullRecords..." doc:id="e0614f9c-2a22-4d89-a395-042a2d2c3489" expression="#[sizeOf(payload)&gt;0]" message="Getting Null Records From the Service...."/>
+		<ee:transform doc:name="Response" doc:id="206ba7b5-0d4a-469f-bea1-3ee4419807b2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

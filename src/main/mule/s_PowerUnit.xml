@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<sub-flow name="GetPowerUnit" doc:id="ba02318a-3c92-4f45-acee-0ec87aa9763e" >
+		<set-variable value="#[attributes.queryParams.'UnitId']" doc:name="tDriver" doc:id="f61bfc1e-fb3c-4c51-9ed6-dc616eb15081" variableName="tDriver"/>
+		<ee:transform doc:name="Headers" doc:id="1df7d3b4-e510-41f5-9218-1241158da7ad" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="DSN" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'DSN']]></ee:set-variable>
+				<ee:set-variable variableName="Password" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Password']]></ee:set-variable>
+				<ee:set-variable variableName="Schema" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Schema']]></ee:set-variable>
+				<ee:set-variable variableName="Username" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Username']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="BODY" doc:id="285bd993-e132-40af-a4c7-18a4fbf8aa72" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns urn urn:TruckMateTypes
+ns urn1 urn:ResManIntf-IResManagement
+---
+soapenv#Envelope:{
+soapenv#Header:{
+urn#TTMHeader:{
+DSN: vars.DSN,
+Password: vars.Password,
+Schema:vars.Schema,
+Username:vars.Username
+}
+},
+soapenv#Body:{
+urn1#GetPUnit:{
+UnitId:vars.tDriver
+}
+},
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="GetPowerUnit" doc:id="04b659f1-f820-4f43-b8bf-666c6ed0c179" config-ref="HTTP_Request_configuration" path="/TruckMateWS-KeepTrucking/soap/IResManagement">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"SOAPAction" : "urn:ResManIntf-IResManagement#GetPUnit",
+	"Content-Type" : "text/xml"
+}]]]></http:headers>
+		</http:request>
+		<validation:is-true doc:id="cb83628a-3ad1-43e9-9dd9-87f371d89133" expression="#[sizeOf(payload)&gt;0]" message="Getting Null Records From the Service...." doc:name="CheckNullRecords..."/>
+		<ee:transform doc:name="Response" doc:id="e8d9aac6-cf2c-4338-ac0e-a7e4d993a909" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="CreatePowerUnit" doc:id="d7ce08f4-a93b-4860-b3eb-3cfb029f570b" >
+		<set-variable value="#[attributes.queryParams.'UnitId']" doc:name="tDriver" doc:id="ef0ca061-4d5c-4a94-bd6d-a62707552f6c" variableName="tDriver"/>
+		<ee:transform doc:name="Headers" doc:id="7c850057-2137-4dd3-955b-35c1b2bfc530">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="DSN"><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'DSN']]></ee:set-variable>
+				<ee:set-variable variableName="Password"><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Password']]></ee:set-variable>
+				<ee:set-variable variableName="Schema"><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Schema']]></ee:set-variable>
+				<ee:set-variable variableName="Username"><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Username']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="BODY" doc:id="658ae1f0-b8fb-427b-adba-719489ca4c0b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="CreatePowerUnit" doc:id="dbde813b-82c7-40df-b9ef-8d7a7814dff5" config-ref="HTTP_Request_configuration"/>
+		<validation:is-true doc:name="CheckNullRecords..." doc:id="63fbac79-c2f9-4bfb-86f3-9cfb4965975b" expression="#[sizeOf(payload)&gt;0]" message="Cannot Proceed with the Null Records....."/>
+		<ee:transform doc:name="Response" doc:id="07128721-c11a-4bff-8280-5677c31c967c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

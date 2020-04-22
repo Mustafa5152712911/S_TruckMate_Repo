@@ -1,0 +1,35 @@
+{
+	"Envelope": {
+		"Header": {
+			"TMobileCommHeader": {
+				"NetworkID": "K",
+				"__prefix": "urn"
+			},
+			"TTMHeader": {
+				"DSN": "KPTRKING",
+				"Password": "K8wi$R49i",
+				"Schema": "TMWIN",
+				"Username": "KPTRUCKING",
+				"__prefix": "urn1"
+			},
+			"__prefix": "soapenv"
+		},
+		"Body": {
+			"SendDriverHOSAvailableHours": {
+				"DriverId": "DR90",
+				"OnDutyHoursAvailToday": "9",
+				"DrivingHoursAvailToday": "7",
+				"Hour24ResetDate": "2020-03-27T23:59:32Z",
+				"Hour34ResetDate": "",
+				"Hour72ResetDate": "",
+				"__prefix": "urn2"
+			},
+			"__prefix": "soapenv"
+		},
+		"_xmlns:soapenv": "http://schemas.xmlsoap.org/soap/envelope/",
+		"_xmlns:urn": "urn:MobileCommImpl",
+		"_xmlns:urn1": "urn:TruckMateTypes",
+		"_xmlns:urn2": "urn:MobileCommIntf-IMobileComm",
+		"__prefix": "soapenv"
+	}
+}

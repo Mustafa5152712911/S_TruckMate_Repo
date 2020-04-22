@@ -1,0 +1,35 @@
+{
+	"Envelope": {
+		"Header": {
+			"TMobileCommHeader": {
+				"NetworkID": "K",
+				"__prefix": "urn"
+			},
+			"TTMHeader": {
+				"DSN": "KPTRKING",
+				"Password": "K8wi$R49i",
+				"Schema": "TMWIN",
+				"Username": "KPTRUCKING",
+				"__prefix": "urn1"
+			},
+			"__prefix": "soapenv"
+		},
+		"Body": {
+			"SendNotificationStatus": {
+				"StatusPairs": {
+					"item": {
+						"ID": "34909",
+						"Status": "msSent"
+					}
+				},
+				"__prefix": "urn2"
+			},
+			"__prefix": "soapenv"
+		},
+		"_xmlns:soapenv": "http://schemas.xmlsoap.org/soap/envelope/",
+		"_xmlns:urn": "urn:MobileCommImpl",
+		"_xmlns:urn1": "urn:TruckMateTypes",
+		"_xmlns:urn2": "urn:MobileCommIntf-IMobileComm",
+		"__prefix": "soapenv"
+	}
+}

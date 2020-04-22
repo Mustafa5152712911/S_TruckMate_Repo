@@ -1,0 +1,37 @@
+{
+	"Envelope": {
+		"Body": {
+			"GetDriverResponse": {
+				"return": {
+					"DriverId": "DR71",
+					"CurrentZone": "ABLET",
+					"DriverName": "Varane, Raphael",
+					"DriverShift": "0",
+					"DriverType": "tduCompany",
+					"HomeZone": "",
+					"StartDate": "1899-12-30T00:00:00.000-07:00",
+					"StartTime": "",
+					"TerminalZone": "",
+					"ActiveInDisp": "true",
+					"OtherPayCategory": "",
+					"DutyCycle": "dcCan7",
+					"HoursLastUpdated": "0001-01-01T07:00:00.000-07:00",
+					"CurrentTrip": "0",
+					"NextTrip": "0",
+					"DLState": "",
+					"LicenseNumber": "",
+					"User1": ""
+				},
+				"_xmlns:NS1": "urn:ResManIntf-IResManagement",
+				"__prefix": "NS1"
+			},
+			"_SOAP-ENV:encodingStyle": "http://schemas.xmlsoap.org/soap/encoding/",
+			"__prefix": "SOAP-ENV"
+		},
+		"_xmlns:SOAP-ENV": "http://schemas.xmlsoap.org/soap/envelope/",
+		"_xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+		"_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+		"_xmlns:SOAP-ENC": "http://schemas.xmlsoap.org/soap/encoding/",
+		"__prefix": "SOAP-ENV"
+	}
+}

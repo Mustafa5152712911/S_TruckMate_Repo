@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<sub-flow name="SendPositions" doc:id="32a2c6b6-a334-4f33-9de3-6fe18b9e787c" >
+		<set-variable value="#[attributes.headers.'Password']" doc:name="Password" doc:id="020a4abe-5144-4e42-ac5a-aeb9a3eb3f6c" variableName="Password"/>
+		<ee:transform doc:name="Headers" doc:id="67628d74-4ce2-49ab-8f68-3fb70a9bdb3e" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="NetworkID" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'NetworkID']]></ee:set-variable>
+				<ee:set-variable variableName="DSN" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'DSN']]></ee:set-variable>
+				<ee:set-variable variableName="UserName" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Username']]></ee:set-variable>
+				<ee:set-variable variableName="Schema" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.'Schema']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="BODY" doc:id="526f3ad1-88af-4430-8f3f-43ab2ce6c799" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="xmlBody" ><![CDATA[%dw 2.0
+output application/xml
+ns soapenv http://schemas.xmlsoap.org/soap/envelope/
+ns urn urn:MobileCommImpl
+ns urn1 urn:TruckMateTypes
+ns urn2 urn:MobileCommIntf-IMobileComm
+---
+soapenv#Envelope:{
+soapenv#Header:{
+urn#TMobileCommHeader:{
+NetworkID:vars.NetworkID
+},
+urn1#TTMHeader:{
+DSN: vars.DSN ,
+Password:vars.Password,
+Schema:vars.Schema ,
+Username: vars.UserName
+}
+},
+soapenv#Body: {
+urn2#SendPositions:{
+	Positions:{
+		item:{
+			Created: payload.Envelope.Body.SendPositions.Positions.item.Created,
+			DeviceID: payload.Envelope.Body.SendPositions.Positions.item.DeviceID,
+			GPS:{
+				Description:"",
+				IsValid: payload.Envelope.Body.SendPositions.Positions.item.GPS.IsValid,
+				Lat: payload.Envelope.Body.SendPositions.Positions.item.GPS.Lat,
+				Long: payload.Envelope.Body.SendPositions.Positions.item.GPS.Long
+			},
+			ReceivedByNetwork: payload.Envelope.Body.SendPositions.Positions.item.ReceivedByNetwork,
+			NetworkLocation:""
+		}
+	}
+	}
+}
+}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="Variable" doc:id="82244464-64bc-43b2-b317-abc2f28a7009" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+vars.xmlBody]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="SendPositions" doc:id="f52f4337-ba52-4302-9ce9-47a70fb66c8e" path="/TruckMateWS-KeepTrucking/soap/IMobileComm" config-ref="HTTP_Request_configuration" responseTimeout="200000000">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"SOAPAction" : "urn:MobileCommIntf-IMobileComm#SendPositions",
+	"Content-Type" : "text/xml"
+}]]]></http:headers>
+		</http:request>
+		<validation:is-true doc:name="CheckNullRecords..." doc:id="54b5680e-3189-4ddd-9e43-21388d1bb57e" expression="#[sizeOf(payload)&gt;0]" message="Getting Null Records From the Service...."/>
+		<ee:transform doc:name="Response" doc:id="5e451efe-225e-4b21-b744-e6ac60a0d526" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>
